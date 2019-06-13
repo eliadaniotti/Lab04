@@ -11,17 +11,17 @@ import it.polito.tdp.lab04.model.Studente;
 public class StudenteDAO {
 	
 	public Studente getStudenteDAO(int matricola) {
+		Studente s=null;
 		String sql= "SELECT * FROM studente WHERE matricola=?";
+		
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
-
+			st.setInt(1, matricola);
 			ResultSet rs = st.executeQuery();
+	
+			s = new Studente(rs.getInt("matricola"), rs.getString("nome"), rs.getString("cognome"), rs.getString("CDS"));
 			
-			Studente s=null;
-			while (rs.next()) {
-				s = new Studente(rs.getInt("matricola"), rs.getString("nome"), rs.getString("cognome"), rs.getString("CDS"));
-			}
 			conn.close();
 			
 			return s;

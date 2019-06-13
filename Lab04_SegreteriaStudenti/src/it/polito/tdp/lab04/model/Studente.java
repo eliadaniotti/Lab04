@@ -6,6 +6,10 @@ public class Studente {
 	String cognome;
 	String cds;
 	
+	public Studente(int matricola) {
+		this.matricola=matricola;
+	}
+	
 	public Studente(int matricola, String nome, String cognome, String cds) {
 		this.matricola = matricola;
 		this.nome = nome;
