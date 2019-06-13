@@ -37,7 +37,10 @@ public class SegreteriaStudentiController {
 
     @FXML
     private Button btnReset;
-
+    
+    public void setModel() {
+    	
+    }
     @FXML
     void doCercaCorsi(ActionEvent event) {
 

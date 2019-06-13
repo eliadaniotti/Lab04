@@ -4,11 +4,13 @@ public class Studente {
 	int matricola;
 	String nome;
 	String cognome;
+	String cds;
 	
-	public Studente(int matricola, String nome, String cognome) {
+	public Studente(int matricola, String nome, String cognome, String cds) {
 		this.matricola = matricola;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.cds=cds;
 	}
 
 	public int getMatricola() {
@@ -28,6 +30,14 @@ public class Studente {
 	}
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
+	}
+	
+	public String getCds() {
+		return cds;
+	}
+
+	public void setCds(String cds) {
+		this.cds = cds;
 	}
 
 	@Override
