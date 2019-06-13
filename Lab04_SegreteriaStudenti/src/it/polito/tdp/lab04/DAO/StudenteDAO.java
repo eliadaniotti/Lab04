@@ -19,8 +19,9 @@ public class StudenteDAO {
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, matricola);
 			ResultSet rs = st.executeQuery();
-	
-			s = new Studente(rs.getInt("matricola"), rs.getString("nome"), rs.getString("cognome"), rs.getString("CDS"));
+			
+			if(rs.next())
+				s = new Studente(matricola, rs.getString("nome"), rs.getString("cognome"), rs.getString("cds"));
 			
 			conn.close();
 			

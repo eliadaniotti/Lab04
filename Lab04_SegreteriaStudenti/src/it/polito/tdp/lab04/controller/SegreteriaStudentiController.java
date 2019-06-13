@@ -52,17 +52,20 @@ public class SegreteriaStudentiController {
     
     public void setModel(Model model) {
     	this.model=model;
-    	//setComboItems();
+    	setComboItems();
     }
 
-    /* private void setComboItems() {
+    private void setComboItems() {
     	// Ottieni tutti i corsi dal model
-    	corsi = model.getTuttiICorsi();
+    	corsi = model.getTuttiCorsi();
 
     	// Aggiungi tutti i corsi alla ComboBox
     	Collections.sort(corsi);
-    	boxCorsi.getItems().addAll(corsi);
-    } */
+    	List<String> nomecorsi = new ArrayList<String>();
+    	for(Corso c : corsi) 
+    		nomecorsi.add(c.getNome());
+    	boxCorsi.getItems().add("sdv");
+    	}
     
     @FXML
     void doCercaCorsi(ActionEvent event) {
@@ -81,15 +84,22 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doReset(ActionEvent event) {
-
+    	txtResult.clear();
+    	txtNome.clear();
+    	txtCognome.clear();
+    	txtMatricola.clear();
     }
 
     @FXML
     void doStudente(ActionEvent event) {
     	int matr = Integer.parseInt(txtMatricola.getText());
     	Studente st = model.getStudente(matr);
-    	txtNome.setText(st.getNome());
-    	txtCognome.setText(st.getCognome());
-    }
+    	if(st!=null) {
+    		txtNome.setText(st.getNome());
+    		txtCognome.setText(st.getCognome());
+    	}
+    	else
+    		txtResult.appendText("Studente non esistente");
+   	}
 
 }
