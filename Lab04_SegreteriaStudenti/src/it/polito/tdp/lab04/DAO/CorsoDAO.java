@@ -62,20 +62,18 @@ public class CorsoDAO {
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
 	public List<Studente> getStudentiIscrittiAlCorso(Corso corso) {
-		final String sql = "SELECT studente.* FROM studente,iscrizione "
-				+ "WHERE iscrizione.codins=\"02PBVPG\" AND "
-				+ "studente.matricola=iscrizione.matricolaiscrizione";
+		final String sql = "SELECT studente.* FROM studente,iscrizione WHERE iscrizione.codins=? AND studente.matricola=iscrizione.matricolaiscrizione";
 
 		List<Studente> studenti = new LinkedList<Studente>();
 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
-
+			st.setString(1, corso.getCodins());
+			
 			ResultSet rs = st.executeQuery();
-
 			while (rs.next()) {
-				Studente s = new Studente(rs.getInt("matricola"), rs.getString("nome"),rs.getString("cognome"), rs.getString("cds"));
+				Studente s = new Studente(rs.getInt("matricola"), rs.getString("nome"),rs.getString("cognome"), rs.getString("CDS"));
                 studenti.add(s);			
 			}
 			

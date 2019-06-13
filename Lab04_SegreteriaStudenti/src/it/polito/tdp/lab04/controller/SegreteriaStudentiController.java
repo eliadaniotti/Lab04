@@ -78,8 +78,12 @@ public class SegreteriaStudentiController {
     	Corso c = boxCorsi.getValue();
     	studenti = model.getStudentiCorso(c);
     	if(studenti!=null) {
-    		for(Studente s : studenti)
-    			txtResult.appendText(s);
+    		for(Studente s : studenti) {
+    			txtResult.appendText(String.valueOf(s.getMatricola())+" ");
+    			txtResult.appendText(s.getNome()+" ");
+    			txtResult.appendText(s.getCognome()+" ");
+    			txtResult.appendText(s.getCds()+ "\n");
+    		}
     	}
     }
 
