@@ -67,4 +67,7 @@ public class Corso implements Comparable<Corso> {
 		return this.nome.compareTo(c.getNome());
 	}
 	
+	public String toString() {
+		return nome;
+	}
 }

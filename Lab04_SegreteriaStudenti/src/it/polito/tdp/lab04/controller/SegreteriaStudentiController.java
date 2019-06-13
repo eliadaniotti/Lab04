@@ -2,6 +2,7 @@ package it.polito.tdp.lab04.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import it.polito.tdp.lab04.model.Corso;
@@ -21,7 +22,7 @@ public class SegreteriaStudentiController {
 	
 
     @FXML
-    private ComboBox<?> boxCorsi;
+    private ComboBox<Corso> boxCorsi;
 
     @FXML
     private Button btnCercaIscritti;
@@ -61,11 +62,8 @@ public class SegreteriaStudentiController {
 
     	// Aggiungi tutti i corsi alla ComboBox
     	Collections.sort(corsi);
-    	List<String> nomecorsi = new ArrayList<String>();
-    	for(Corso c : corsi) 
-    		nomecorsi.add(c.getNome());
-    	boxCorsi.getItems().add("sdv");
-    	}
+    	boxCorsi.getItems().addAll(corsi);
+    }
     
     @FXML
     void doCercaCorsi(ActionEvent event) {
@@ -74,7 +72,15 @@ public class SegreteriaStudentiController {
 
     @FXML
     void doCercaIscritti(ActionEvent event) {
-
+    	txtResult.clear();
+    	List<Studente> studenti = new LinkedList<Studente>();
+    	
+    	Corso c = boxCorsi.getValue();
+    	studenti = model.getStudentiCorso(c);
+    	if(studenti!=null) {
+    		for(Studente s : studenti)
+    			txtResult.appendText(s);
+    	}
     }
 
     @FXML
