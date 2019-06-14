@@ -62,12 +62,49 @@ public class SegreteriaStudentiController {
 
     	// Aggiungi tutti i corsi alla ComboBox
     	Collections.sort(corsi);
+    	boxCorsi.getItems().add(null);
     	boxCorsi.getItems().addAll(corsi);
+    	
     }
     
     @FXML
     void doCercaCorsi(ActionEvent event) {
-
+    	txtResult.clear();
+    	List<Corso> corsi = new LinkedList<Corso>();
+    	Corso cc = boxCorsi.getValue();
+    	Studente s;
+    	
+    	try {
+    		s = model.getStudente(Integer.parseInt(txtMatricola.getText()));
+    	}
+    	catch(NumberFormatException e) {
+    		txtResult.appendText("Inserire un numero");
+    		return;
+    	}
+    	
+    	if(s==null) {
+    		txtResult.appendText("Studente non esistente");
+    		return;
+    	}
+    	
+    	if(cc==null) {
+    		corsi.addAll(model.getCorsiStudente(s.getMatricola()));
+    		
+    		if(corsi==null) {
+    			txtResult.appendText("Studente non iscritto a nessun corso");
+    			return;
+    		}
+    	
+    		for(Corso c: corsi) {
+    			txtResult.appendText(c.toString() + "\n");
+    		}
+    	}
+    	else {
+    		if(model.isIscritto(s.getMatricola(), cc))
+    			txtResult.appendText("Studente iscritto al corso");
+    		else
+    			txtResult.appendText("Studente NON iscritto al corso");
+    	}
     }
 
     @FXML
@@ -76,6 +113,12 @@ public class SegreteriaStudentiController {
     	List<Studente> studenti = new LinkedList<Studente>();
     	
     	Corso c = boxCorsi.getValue();
+    	
+    	if(c==null) {
+    		txtResult.appendText("Selezionare un corso");
+    		return;
+    	}
+    	
     	studenti = model.getStudentiCorso(c);
     	if(studenti!=null) {
     		for(Studente s : studenti) {
@@ -85,6 +128,8 @@ public class SegreteriaStudentiController {
     			txtResult.appendText(s.getCds()+ "\n");
     		}
     	}
+    	else
+    		txtResult.appendText("Nessun studente iscritto a questo corso");
     }
 
     @FXML
@@ -98,11 +143,22 @@ public class SegreteriaStudentiController {
     	txtNome.clear();
     	txtCognome.clear();
     	txtMatricola.clear();
+    	boxCorsi.setValue(null);
     }
 
     @FXML
     void doStudente(ActionEvent event) {
-    	int matr = Integer.parseInt(txtMatricola.getText());
+    	txtResult.clear();
+    	int matr=0;
+    	
+    	try {
+    		matr = Integer.parseInt(txtMatricola.getText());
+    	}
+    	catch(NumberFormatException e) {
+    		txtResult.appendText("Inserire un numero");
+    		return;
+    	}
+    	
     	Studente st = model.getStudente(matr);
     	if(st!=null) {
     		txtNome.setText(st.getNome());

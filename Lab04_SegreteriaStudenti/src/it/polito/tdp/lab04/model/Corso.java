@@ -68,6 +68,6 @@ public class Corso implements Comparable<Corso> {
 	}
 	
 	public String toString() {
-		return nome;
+		return codins+" "+crediti+ " " +nome+ " " +pd;
 	}
 }

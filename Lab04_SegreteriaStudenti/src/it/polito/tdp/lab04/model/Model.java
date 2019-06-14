@@ -14,6 +14,10 @@ public class Model {
 		return c.getTuttiICorsi();
 	}
 	
+	public List<Corso> getCorsiStudente(int matricola){
+		return s.getCorsiStudente(matricola);
+	}
+	
 	public List<Studente> getStudentiCorso(Corso corso) {
 		return c.getStudentiIscrittiAlCorso(corso);
 	}
@@ -21,5 +25,8 @@ public class Model {
 	public Studente getStudente(int matricola) {
 		return s.getStudenteDAO(matricola);
 	}
-
+	
+	public boolean isIscritto(int matricola, Corso c) {
+		return s.isIscritto(matricola, c);
+	}
 }

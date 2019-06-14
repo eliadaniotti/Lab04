@@ -62,7 +62,7 @@ public class CorsoDAO {
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
 	public List<Studente> getStudentiIscrittiAlCorso(Corso corso) {
-		final String sql = "SELECT studente.* FROM studente,iscrizione WHERE iscrizione.codins=? AND studente.matricola=iscrizione.matricolaiscrizione";
+		final String sql = "SELECT * FROM studente,iscrizione WHERE codins=? AND studente.matricola=iscrizione.matricola";
 
 		List<Studente> studenti = new LinkedList<Studente>();
 
@@ -73,17 +73,16 @@ public class CorsoDAO {
 			
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
-				Studente s = new Studente(rs.getInt("matricola"), rs.getString("nome"),rs.getString("cognome"), rs.getString("CDS"));
-                studenti.add(s);			
+                studenti.add(new Studente(rs.getInt("matricola"), rs.getString("nome"),rs.getString("cognome"), rs.getString("cds")));			
 			}
 			
 			conn.close();
-			return studenti;
 		}
 		catch (SQLException e) {
 			// e.printStackTrace();
 			throw new RuntimeException("Errore Db", e);
 		}
+		return studenti;
 	}
 
 	/*
